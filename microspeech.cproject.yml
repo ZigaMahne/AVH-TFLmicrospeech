@@ -1,0 +1,83 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/Open-CMSIS-Pack/devtools/schemas/projmgr/1.5.0/tools/projmgr/schemas/cproject.schema.json
+
+project:
+
+  connections:
+    - connect: Microspeech Application
+      provides:
+      - CMSIS-RTOS2
+      consumes:
+      - STDIN
+      - STDOUT
+      - STDERR
+      - Heap: 65536
+
+  packs:
+    - pack: tensorflow::flatbuffers@1.22.5-rc4
+    - pack: tensorflow::gemmlowp@1.22.5-rc4
+    - pack: tensorflow::kissfft@1.22.5-rc4
+    - pack: tensorflow::ruy@1.22.5-rc4
+    - pack: tensorflow::tensorflow-lite-micro@1.22.5-rc4
+
+  define:
+    - __EVENT_DRIVEN
+
+  add-path:
+    - ./VSI/include
+    - ./VSI/audio/include
+    - ./micro_speech/src
+
+  components:
+    - component: ARM::CMSIS:DSP&Source
+    - component: ARM::CMSIS:NN Lib
+    - component: ARM::CMSIS:RTOS2:Keil RTX5&Source
+    - component: tensorflow::Data Exchange:Serialization:flatbuffers&tensorflow
+    - component: tensorflow::Data Processing:Math:gemmlowp fixed-point&tensorflow
+    - component: tensorflow::Data Processing:Math:kissfft&tensorflow
+    - component: tensorflow::Data Processing:Math:ruy&tensorflow
+    - component: tensorflow::Machine Learning:TensorFlow:Kernel Utils
+    - component: tensorflow::Machine Learning:TensorFlow:Kernel&CMSIS-NN
+
+  groups:
+    - group: App
+      files:
+        - file: ./Platform_FVP_Corstone_SSE-300_Ethos-U55/microspeech.c
+    - group: Driver
+      files:
+        - file: ./VSI/audio/driver/audio_drv.c
+    - group: TF_micro_frontend
+      files:
+        - file: ./micro_speech/src/microfrontend/lib/fft.cc
+        - file: ./micro_speech/src/microfrontend/lib/fft_util.cc
+        - file: ./micro_speech/src/microfrontend/lib/filterbank.c
+        - file: ./micro_speech/src/microfrontend/lib/filterbank_util.c
+        - file: ./micro_speech/src/microfrontend/lib/frontend.c
+        - file: ./micro_speech/src/microfrontend/lib/frontend_util.c
+        - file: ./micro_speech/src/microfrontend/lib/log_lut.c
+        - file: ./micro_speech/src/microfrontend/lib/log_scale.c
+        - file: ./micro_speech/src/microfrontend/lib/log_scale_util.c
+        - file: ./micro_speech/src/microfrontend/lib/noise_reduction.c
+        - file: ./micro_speech/src/microfrontend/lib/noise_reduction_util.c
+        - file: ./micro_speech/src/microfrontend/lib/pcan_gain_control.c
+        - file: ./micro_speech/src/microfrontend/lib/pcan_gain_control_util.c
+        - file: ./micro_speech/src/microfrontend/lib/window.c
+        - file: ./micro_speech/src/microfrontend/lib/window_util.c
+    - group: TF_micro_features
+      files:
+        - file: ./micro_speech/src/micro_features/micro_features_generator.cc
+        - file: ./micro_speech/src/micro_features/micro_model_settings.cc
+        - file: ./micro_speech/src/micro_features/model.cc
+        - file: ./micro_speech/src/micro_features/no_micro_features_data.cc
+        - file: ./micro_speech/src/micro_features/yes_micro_features_data.cc
+    - group: TF_main
+      files:
+        - file: ./micro_speech/src/audio_provider.cc
+        - file: ./micro_speech/src/command_responder.cc
+        - file: ./micro_speech/src/feature_provider.cc
+        - file: ./micro_speech/src/main_functions.cc
+        - file: ./micro_speech/src/recognize_commands.cc
+        - file: ./micro_speech/src/arm_nn_softmax_common_s8.c
+
+  layers:
+    - layer: $Board-Layer$
+      type: Board

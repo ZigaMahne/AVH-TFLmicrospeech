@@ -1,0 +1,61 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/Open-CMSIS-Pack/devtools/schemas/projmgr/1.5.0/tools/projmgr/schemas/clayer.schema.json
+
+layer:
+  type: Board
+  # name: AVH_MPS3_Cortsone-300
+  # variant: IoT-VSocket-Ethernet
+  description: Board setup for IoT with VSocket and Ethernet interface
+  for-device: ARM::SSE-300-MPS3
+  processor:
+    endian: little
+    trustzone: secure
+
+  connections:
+    - connect: AVH_MPS3_Cortsone-300 Board
+      consumes:
+        - CMSIS-RTOS2
+      provides:
+        - VSocket
+        - CMSIS_ETH: 0
+        - STDOUT
+        - Heap: 65536
+
+  packs:
+    - pack: ARM::V2M_MPS3_SSE_300_BSP@1.2.0
+    - pack: ARM::CMSIS@5.9.0
+    - pack: ARM::CMSIS-Driver@2.7.2
+    - pack: Keil::ARM_Compiler@1.7.2
+
+  components:
+    - component: ARM::Device:Definition
+    - component: ARM::Device:Startup&Baremetal
+
+    - component: ARM::Native Driver:GPIO
+    - component: ARM::Native Driver:IO
+    - component: ARM::Native Driver:MPC
+    - component: ARM::Native Driver:PPC
+    - component: ARM::Native Driver:SPI
+    - component: ARM::Native Driver:SysCounter
+    - component: ARM::Native Driver:SysTimer
+    - component: ARM::Native Driver:Timeout
+    - component: ARM::Native Driver:UART
+    - component: ARM::Native Driver:Watch Dog
+
+    - component: ARM::CMSIS:CORE
+
+    - component: ARM::CMSIS Driver:MPC
+    - component: ARM::CMSIS Driver:PPC
+    - component: ARM::CMSIS Driver:SPI
+    - component: ARM::CMSIS Driver:USART
+    - component: Keil::CMSIS Driver:Ethernet:ETH_LAN91C111
+
+    - component: Keil::Compiler&ARM Compiler:Event Recorder&DAP
+    - component: Keil::Compiler&ARM Compiler:I/O:STDOUT&User
+
+  groups:
+    - group: Board
+      files:
+        - file: ./main.h
+        - file: ./main.c
+        - file: ./Board_IO/retarget_stdio.c
+        - file: ./RTE/Device/SSE-300-MPS3/fvp_sse300_mps3_s.sct
