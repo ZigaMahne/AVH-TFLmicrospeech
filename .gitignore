@@ -52,8 +52,6 @@ Mkfile.old
 dkms.conf
 
 # MDK related files
-Listings/
-Objects/
 EventRecorderStub.scvd
 
 # Python Cache Files
