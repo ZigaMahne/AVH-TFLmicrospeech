@@ -3,7 +3,7 @@
 solution:
 
   target-types:
-    - type: AVH
+    - type: AVH_MPS3_Corstone-300
       device: ARM::SSE-300-MPS3
       variables:
         - Board-Layer: ./framework/layer/Board/AVH_MPS3_Corstone-300/IoT/Board.clayer.yml
