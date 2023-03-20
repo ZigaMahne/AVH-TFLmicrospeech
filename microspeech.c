@@ -36,7 +36,7 @@ void AudioRxEvent (void) {
 /*---------------------------------------------------------------------------
  * Application main thread
  *---------------------------------------------------------------------------*/
-static void app_main (void *argument) {
+void app_main (void *argument) {
   (void)argument;
 
   setup();
@@ -51,6 +51,7 @@ static void app_main (void *argument) {
 /*---------------------------------------------------------------------------
  * Application initialization
  *---------------------------------------------------------------------------*/
-void app_initialize (void) {
+int32_t app_initialize (void) {
   app_main_tid = osThreadNew(app_main, NULL, &app_main_attr);
+  return 0;
 }

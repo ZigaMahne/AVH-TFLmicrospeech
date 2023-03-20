@@ -41,7 +41,7 @@ project:
   groups:
     - group: App
       files:
-        - file: ./Platform_FVP_Corstone_SSE-300_Ethos-U55/microspeech.c
+        - file: ./microspeech.c
     - group: Driver
       files:
         - file: ./VSI/audio/driver/audio_drv.c
