@@ -23,8 +23,6 @@ project:
     - __EVENT_DRIVEN
 
   add-path:
-    - ./VSI/include
-    - ./VSI/audio/include
     - ./micro_speech/src
 
   components:
@@ -42,9 +40,6 @@ project:
     - group: App
       files:
         - file: ./microspeech.c
-    - group: Driver
-      files:
-        - file: ./VSI/audio/driver/audio_drv.c
     - group: TF_micro_frontend
       files:
         - file: ./micro_speech/src/microfrontend/lib/fft.cc
