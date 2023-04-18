@@ -11,6 +11,10 @@ solution:
       device: ARM::SSE-310-MPS3
       variables:
         - Board-Layer: ./framework/layer/Board/AVH_MPS3_Corstone-310/IoT/Board.clayer.yml
+    - type: IMXRT1050-EVKB
+      device: NXP::MIMXRT1052DVL6B
+      variables:
+        - Board-Layer:  ./framework/layer/Board/IMXRT1050-EVKB/IoT/Board.clayer.yml
 
   build-types:
     - type: Debug
