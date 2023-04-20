@@ -15,6 +15,10 @@ solution:
       device: NXP::MIMXRT1052DVL6B
       variables:
         - Board-Layer:  ./framework/layer/Board/IMXRT1050-EVKB/IoT/Board.clayer.yml
+    - type: B-U585I-IOT02A
+      board: STMicroelectronics::B-U585I-IOT02A
+      variables:
+        - Board-Layer:  ./framework/layer/Board/B-U585I-IOT02A/IoT/Board.clayer.yml
 
   build-types:
     - type: Debug
